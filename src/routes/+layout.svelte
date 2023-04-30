@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	// The ordering of these imports is critical to your app working properly
 	import '@skeletonlabs/skeleton/themes/theme-gold-nouveau.css';
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
@@ -8,7 +9,8 @@
 	import { AppShell, AppRail, AppRailTile } from '@skeletonlabs/skeleton';
 	import { writable, type Writable } from 'svelte/store';
 
-	const storeValue: Writable<number> = writable(0);
+	const storeValue: Writable<string> = writable('/');
+	$: storeValue.set($page.url.pathname);
 </script>
 
 <!-- App Shell -->
@@ -16,7 +18,7 @@
 	<svelte:fragment slot="sidebarLeft">
 		<!-- Insert the list: -->
 		<AppRail selected={storeValue}>
-			<AppRailTile value={0} tag="a" href="/">
+			<AppRailTile value="/" tag="a" href="/">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -33,7 +35,7 @@
 					<polyline points="9 22 9 12 15 12 15 22" />
 				</svg>
 			</AppRailTile>
-			<AppRailTile value={1} tag="a" href="/movies">
+			<AppRailTile value="/movies" tag="a" href="/movies">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -56,7 +58,7 @@
 					<line x1="17" x2="22" y1="7" y2="7" />
 				</svg>
 			</AppRailTile>
-			<AppRailTile value={2} tag="a" href="/tv">
+			<AppRailTile value="/tv" tag="a" href="/tv">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"
@@ -73,7 +75,7 @@
 					<polyline points="17 2 12 7 7 2" />
 				</svg>
 			</AppRailTile>
-			<AppRailTile value={3}>
+			<AppRailTile value="/search">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					width="24"

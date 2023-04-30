@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { MovieResult, TvResult } from '../types/tmdb';
 	import Rate from './Rate.svelte';
-	export let movie: MovieResult & TvResult;
-	const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
-	const movieName = movie?.title || movie?.name;
-	const prefix = movie?.title ? 'movies' : 'tv';
+	export let movie: MovieResult & TvResult;
+
+	$: posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+	$: movieName = movie?.title || movie?.name;
+	$: prefix = movie?.title ? 'movies' : 'tv';
 </script>
 
 <a class="card !bg-transparent" href={`/${prefix}/${movie.id}`}>

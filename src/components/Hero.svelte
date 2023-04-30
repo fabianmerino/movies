@@ -3,7 +3,7 @@
 	import type { MovieDetails, TvDetails } from '../types/tmdb';
 	import Rate from '$components/Rate.svelte';
 
-	export let featured: MovieDetails & TvDetails;
+	export let featured: MovieDetails | TvDetails | (MovieDetails & TvDetails);
 	const backdropUrl = `https://image.tmdb.org/t/p/original${featured.backdrop_path}`;
 	const movieName = featured?.title || featured?.name;
 	let yearStart = '';
