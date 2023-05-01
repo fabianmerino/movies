@@ -8,15 +8,14 @@
 	import '../app.postcss';
 	import { AppShell, AppRail, AppRailTile } from '@skeletonlabs/skeleton';
 	import { writable, type Writable } from 'svelte/store';
+	import PageTransition from '$components/PageTransition.svelte';
 
 	const storeValue: Writable<string> = writable('/');
 	$: storeValue.set($page.url.pathname);
 </script>
 
-<!-- App Shell -->
-<AppShell slotSidebarLeft="bg-surface-500/5 w-auto">
+<AppShell slotSidebarLeft="bg-surface-500/5 w-auto" class="min-h-full">
 	<svelte:fragment slot="sidebarLeft">
-		<!-- Insert the list: -->
 		<AppRail selected={storeValue}>
 			<AppRailTile value="/" tag="a" href="/">
 				<svg
@@ -92,8 +91,8 @@
 				</svg>
 			</AppRailTile>
 		</AppRail>
-		<!-- --- -->
 	</svelte:fragment>
-	<!-- Page Route Content -->
-	<slot />
+	<PageTransition url={$storeValue}>
+		<slot />
+	</PageTransition>
 </AppShell>

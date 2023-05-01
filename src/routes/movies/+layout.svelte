@@ -41,4 +41,4 @@
 	{/each}
 </nav>
 
-<slot {selected} />
+<slot />

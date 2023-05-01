@@ -1,12 +1,11 @@
-import { TMDB_API_KEY } from '$env/static/private';
+import { TMDB_API_KEY, API_URL } from '$env/static/private';
+import type { PageServerLoadEvent } from '../$types';
 import type { MovieDetails, MoviesResponse } from '../../types/tmdb';
 
-/** @type {import('./$types').PageServerLoad} */
-export async function load({ fetch }) {
+export async function load({ fetch }: PageServerLoadEvent) {
 	const $fetch = (url: string) => fetch(url).then((res) => res.json());
 
-	const apiUrl = 'https://api.themoviedb.org/3';
-	const appendToResponse = 'videos,credits,images,external_ids,release_dates';
+	const apiUrl = API_URL || 'https://api.themoviedb.org/3';
 
 	const popular: MoviesResponse = await $fetch(
 		`${apiUrl}/movie/popular?api_key=${TMDB_API_KEY}&language=en-US`
@@ -22,6 +21,7 @@ export async function load({ fetch }) {
 	);
 
 	const item = upcoming.results[0];
+	const appendToResponse = 'videos,credits,images,external_ids,release_dates';
 	const featured: MovieDetails = await $fetch(
 		`${apiUrl}/movie/${item.id}?api_key=${TMDB_API_KEY}&language=en-US&append_to_response=${appendToResponse}`
 	);

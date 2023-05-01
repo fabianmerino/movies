@@ -2,10 +2,11 @@
 	import { fade } from 'svelte/transition';
 	import type { MovieDetails, TvDetails } from '../types/tmdb';
 	import Rate from '$components/Rate.svelte';
+	import { apiImgUrl } from '$lib/tmdb';
 
-	export let featured: MovieDetails | TvDetails | (MovieDetails & TvDetails);
-	const backdropUrl = `https://image.tmdb.org/t/p/original${featured.backdrop_path}`;
-	const movieName = featured?.title || featured?.name;
+	export let featured: MovieDetails & TvDetails;
+	$: backdropUrl = `${apiImgUrl}/original${featured.backdrop_path}`;
+	$: movieName = featured?.title || featured?.name;
 	let yearStart = '';
 	$: {
 		const date = featured?.release_date ? featured?.release_date : featured?.first_air_date;
@@ -13,18 +14,18 @@
 	}
 </script>
 
-<section class="relative pb-[40%] h-0 block bg-black" transition:fade>
+<section class="relative pb-[40%] h-0 block bg-black">
 	<div
 		class="absolute top-0 right-0 max-w-[71.1%] h-full block min-h-0 after:absolute after:bg-gradient-to-r after:from-black after:to-transparent after:top-0 after:right-0 after:w-full after:h-full after:z-10"
 	>
-		<img src={backdropUrl} alt={movieName} loading="lazy" />
+		<img src={backdropUrl} alt={movieName} loading="eager" class="h-full inline-block max-w-none" />
 	</div>
 	<div class="absolute top-0 left-0 z-10 p-20 flex items-center w-[43%] h-full">
 		<div>
 			<h1 class="max-w-2xl mb-2 font-extrabold tracking-tight leading-none dark:text-white">
 				{movieName}
 			</h1>
-			<h5 class="flex gap-2 mb-4 items-center ">
+			<h5 class="flex gap-2 mb-4 items-center">
 				<Rate rating={featured.vote_average} />
 				<span class="font-medium text-gray-500 dark:text-gray-400">
 					{featured.vote_count} Reviews

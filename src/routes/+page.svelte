@@ -1,6 +1,7 @@
 <script>
 	import Carousel from '$components/Carousel.svelte';
 	import Hero from '$components/Hero.svelte';
+	import { fade } from 'svelte/transition';
 
 	export let data;
 	const { featured, trendingMovies, trendingTv } = data;
@@ -10,7 +11,7 @@
 	<title>Home | Movies App</title>
 </svelte:head>
 
-<div class="h-full mx-auto">
+<div class="mx-auto" transition:fade>
 	<!-- / -->
 	<Hero {featured} />
 	<!-- / -->
